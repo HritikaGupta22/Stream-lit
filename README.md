@@ -1,5 +1,6 @@
 # Dashboard using streamlit
-open streamlit.ipynb, on second cell after there is a link to dashboard.
-under which report is written
-after opening the link, upload the life expectancy.csv file which is present in this folder.
-choose Atleast one values in the slicer.
+Navigate to the streamlit.ipynb file. In the second cell, find a hyperlink leading to the dashboard.
+
+Click on the provided link, where you will find a report. Upon accessing the link, import the life_expectancy.csv file located in the same folder.
+
+Select at least one value using the slicer options.
