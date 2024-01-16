@@ -57,8 +57,14 @@ def add_average_blocks(df):
 def create_visualizations(df):
     # Sidebar for multifilter slicer
     st.sidebar.subheader("Filter Data:")
-    selected_regions = st.sidebar.multiselect("Select Regions", df['Region'].unique())
-    selected_income_groups = st.sidebar.multiselect("Select Income Groups", df['IncomeGroup'].unique())
+
+    # Get unique values for regions and income groups
+    all_regions = df['Region'].unique()
+    all_income_groups = df['IncomeGroup'].unique()
+
+    # Default selection includes all values
+    selected_regions = st.sidebar.multiselect("Select Regions", all_regions, default=all_regions)
+    selected_income_groups = st.sidebar.multiselect("Select Income Groups", all_income_groups, default=all_income_groups)
 
     # Create year slicer
     selected_years = st.sidebar.slider("Select Year Range", min_value=2001, max_value=2019, value=(2001, 2019), step=1)
@@ -69,8 +75,6 @@ def create_visualizations(df):
         (df['IncomeGroup'].isin(selected_income_groups)) &
         (df['Year'].between(selected_years[0], selected_years[1]))
     ]
-  
-    
     # Visualizations
     st.subheader("Visualizations:")
 
@@ -93,7 +97,7 @@ def create_visualizations(df):
     ax2.tick_params(axis='y', labelcolor='red')
     st.pyplot(fig)
 
-    # Graph: Scatter Plot - Relationship between CO2 Emissions and Life Expectancy
+    # Graph3: Scatter Plot - Relationship between CO2 Emissions and Life Expectancy
     st.subheader("Graph 3: Scatter Plot: Relationship between CO2 Emissions and Life Expectancy")
 
     # Create scatter plot
@@ -102,9 +106,10 @@ def create_visualizations(df):
     ax.set_xlabel('Carbon Dioxide Emissions (kiloton)')
     ax.set_ylabel('Life Expectancy')
     ax.set_title('Relationship between CO2 Emissions and Life Expectancy')
-
-    # Display the plot using Streamlit
-    st.pyplot(fig)
+    # Add hover information using ax.text
+   
+    # Show Plotly figure in Streamlit
+    st.plotly_chart(fig)
 
 
 
@@ -122,7 +127,7 @@ def create_visualizations(df):
     ax.set_ylabel('Life Expectancy World Bank')
     ax.set_title('Impact of Expenditure on Life Expectancy')
     ax.legend(*scatter.legend_elements(), title='Education Expenditure %')
-    st.pyplot(fig)
+    st.plotly_chart(fig)
 
     # Graph 5: Pie Plot - Region-wise Corruption
     st.subheader("Graph 5: Region-wise Corruption")
@@ -154,7 +159,7 @@ def create_visualizations(df):
     ax.set_xlabel('Income Group')
     ax.set_ylabel('Life Expectancy World Bank %')
     ax.set_title('Income Group-wise Life Expectancy World Bank')
-    st.pyplot(fig)
+    st.plotly_chart(fig)
 
     # Graph 7: Multiline Plot - Effect of Communicable and Non-Communicable Diseases on Life Expectancy (Grouped by Year)
     st.subheader("Graph 7 : Multiline Plot: Effect of Communicable and Non-Communicable Diseases on Life Expectancy (Grouped by Year)")
@@ -168,8 +173,8 @@ def create_visualizations(df):
     }).reset_index()
 
     # Plot the mean values
-    ax.plot(grouped_data['Communicable'], grouped_data['Life Expectancy World Bank'], marker='o', label='Communicable Diseases')
-    ax.plot(grouped_data['NonCommunicable'],grouped_data['Life Expectancy World Bank'], marker='o', label='Non-Communicable Diseases')
+    ax.plot(grouped_data['Communicable'], grouped_data['Life Expectancy World Bank'],marker='o', label='Communicable Diseases')
+    ax.plot(grouped_data['NonCommunicable'],grouped_data['Life Expectancy World Bank'],marker='o', label='Non-Communicable Diseases')
     ax.set_ylabel('Life Expectancy')
     ax.set_title('Effect of Communicable and Non-Communicable Diseases on Life Expectancy (Grouped by Year)')
     ax.legend()
