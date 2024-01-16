@@ -18,7 +18,7 @@ st.write(''' Welcome To Life Expectancy Dashboard Dashboard''')
 def main():
     # Load your dataset
     try:
-        data_url="life expectancy.csv"
+        data_url="https://github.com/HritikaGupta22/Stream-lit/blob/main/life%20expectancy.csv"
         df = pd.read_csv(data_url)
 
         # Display the DataFrame
